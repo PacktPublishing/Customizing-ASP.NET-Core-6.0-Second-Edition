@@ -1,0 +1,14 @@
+@model TagHelperSample.Controllers.AboutViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+
+<greeter name=".NET Conf"></greeter>
+
+<person-grid persons="Model.Persons"></person-grid>

@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "About";
+}
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+<p>Use this area to provide additional information.</p>
+
+<h3>Contacts</h3>
+<ul>
+    @foreach(var person in Model)
+    {
+        <li>
+            @person.FirstName @person.LastName (@person.Age)<br />
+            @person.EmailAddress<br />
+        </li>
+    }
+</ul>
