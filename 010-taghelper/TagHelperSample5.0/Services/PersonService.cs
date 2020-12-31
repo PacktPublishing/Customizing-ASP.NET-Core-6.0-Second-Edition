@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using GenFu;
 
 namespace TagHelperSample.Services
@@ -16,9 +17,16 @@ namespace TagHelperSample.Services
     }
     public class Person
     {
+        [DisplayName("First name")]
         public string FirstName { get; set; }
+
+        [DisplayName("Last name")]
         public string LastName { get; set; }
+
         public int Age { get; set; }
+
+        [DisplayName("Email address")]
         public string EmailAddress { get; set; }
     }
+
 }

@@ -9,7 +9,7 @@ using CsvHelper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace OutputFormatterSample.Controllers
+namespace ModelBinderSample.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
