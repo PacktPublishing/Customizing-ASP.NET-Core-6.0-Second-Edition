@@ -1,15 +1,13 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace RoutingSample
 {
@@ -56,22 +54,81 @@ namespace RoutingSample
                 });
                 endpoints.MapGet("/mapget", async context =>
                 {
-                    await context.Response.WriteAsync("MapGet");
+                    await context.Response.WriteAsync("Map GET");
                 });
                 endpoints.MapPost("/mappost", async context =>
                 {
-                    await context.Response.WriteAsync("MapPost");
+                    await context.Response.WriteAsync("Map POST");
+                });
+                endpoints.MapPut("/mapput", async context =>
+                {
+                    await context.Response.WriteAsync("Map PUT");
+                });
+                endpoints.MapDelete("/mapdelete", async context =>
+                {
+                    await context.Response.WriteAsync("Map DELETE");
                 });
                 endpoints.MapMethods("/mapmethods", new[] { "DELETE", "PUT" }, async context =>
                 {
-                    await context.Response.WriteAsync("MapMethods");
+                    await context.Response.WriteAsync("Map Methods");
                 });
 
+
+                endpoints.MapMyHealthChecks();
+                endpoints.MapMyHealthChecks("/myhealth1");
+
+                endpoints.Map("/myhealth2", endpoints.CreateApplicationBuilder()
+                    .UseMiddleware<MyHealthChecksMiddleware>()
+                    .Build())
+                    .WithDisplayName("My custom health checks");
+
+                //endpoints.MapHealthChecks("/healthz"); 
 
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
             });
         }
     }
+
+
+    public static class MapMyHealthChecksExtensions
+    {
+        public static IEndpointConventionBuilder MapMyHealthChecks(
+            this IEndpointRouteBuilder endpoints, string pattern = "/myhealth")
+        {
+            var pipeline = endpoints
+                .CreateApplicationBuilder()
+                .UseMiddleware<MyHealthChecksMiddleware>()
+                .Build();
+
+            return endpoints.Map(pattern, pipeline)
+                .WithDisplayName("My custom health checks");
+
+        }
+    }
+
+    public class MyHealthChecksMiddleware
+    {
+        private readonly ILogger<MyHealthChecksMiddleware> _logger;
+
+        public MyHealthChecksMiddleware(
+            RequestDelegate next,
+            ILogger<MyHealthChecksMiddleware> logger)
+        {
+            _logger = logger;
+        }
+
+        public async Task Invoke(HttpContext context)
+        {
+            // add some checks here... 
+
+            context.Response.StatusCode = 200;
+            context.Response.ContentType = "text/plain";
+            await context.Response.WriteAsync("OK");
+        }
+    }
+
+
 }
