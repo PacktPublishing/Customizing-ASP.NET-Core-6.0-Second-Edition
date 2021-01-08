@@ -1,14 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
-namespace MiddleWaresSample
+namespace MiddlewaresSample
 {
     public class Startup
     {
@@ -16,62 +16,49 @@ namespace MiddleWaresSample
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            // app.Use(async (context, next) =>
-            // {
-            //     var s = new Stopwatch();
-            //     s.Start();
-            //     await next();
-            //     s.Stop();
-            //     var result = s.ElapsedMilliseconds;
-            //     await context.Response.WriteAsync($"Time needed: {result }");
-            // });
-
             //app.UseMiddleware<StopwatchMiddleWare>();
-            
+
             app.UseStopwatch();
 
-            // app.Map("/map1", app1 =>
+            app.Use(async (context, next) =>
+            {
+                await context.Response.WriteAsync("===");
+                await next();
+                await context.Response.WriteAsync("===");
+            });
+            app.Use(async (context, next) =>
+            {
+                await context.Response.WriteAsync(">>>>>> ");
+                await next();
+                await context.Response.WriteAsync(" <<<<<<");
+            });
+
+            app.Run(async context =>
+            {
+                await context.Response.WriteAsync("Hello World!");
+            });
+
+            // app.UseRouting();
+
+            // app.UseEndpoints(endpoints =>
             // {
-            //     app1.Run(async context =>
+            //     endpoints.MapGet("/", async context =>
             //     {
-            //         await context.Response.WriteAsync("Map Test 1");
+            //         await context.Response.WriteAsync("Hello World!");
             //     });
             // });
-            // app.Map("/map2", app1 =>
-            // {
-            //     app1.Run(async context =>
-            //     {
-            //         await context.Response.WriteAsync("Map Test 2");
-            //     });
-            // });
-
-            // app.Use(async (context, next) =>
-            // {
-            //     await context.Response.WriteAsync(" ===");
-            //     await next();
-            //     await context.Response.WriteAsync("=== ");
-            // });
-            // app.Use(async (context, next) =>
-            // {
-            //     await context.Response.WriteAsync(">>>>>> ");
-            //     await next();
-            //     await context.Response.WriteAsync(" <<<<<<");
-            // });
-
-            app.UseMvc();
         }
-    }
+    } 
 
     public class StopwatchMiddleWare
     {
