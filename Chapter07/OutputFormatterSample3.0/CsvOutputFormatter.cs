@@ -8,6 +8,7 @@ using CsvHelper;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Net.Http.Headers;
 using OutputFormatterSample.Controllers;
+using OutputFormatterSample.Models;
 
 namespace OutputFormatterSample
 {
