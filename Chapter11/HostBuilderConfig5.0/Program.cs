@@ -21,19 +21,19 @@ namespace HostBuilderConfig
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder
-                        .UseKestrel((host, options) =>
+                webBuilder
+                    .UseKestrel((host, options) =>
+                    {
+                        var filename = host.Configuration.GetValue("AppSettings:certfilename", "");
+                        var password = host.Configuration.GetValue("AppSettings:certpassword", "");
+                        
+                        options.Listen(IPAddress.Loopback, 5000);
+                        options.Listen(IPAddress.Loopback, 5001, listenOptions =>
                         {
-                            var filename = host.Configuration.GetValue("AppSettings:certfilename", "");
-                            var password = host.Configuration.GetValue("AppSettings:certpassword", "");
-                            
-                            options.Listen(IPAddress.Loopback, 5000);
-                            options.Listen(IPAddress.Loopback, 5001, listenOptions =>
-                            {
-                                listenOptions.UseHttps(filename, password);
-                            });
-                        })
-                        .UseStartup<Startup>();
+                            listenOptions.UseHttps(filename, password);
+                        });
+                    })
+                    .UseStartup<Startup>();
                 });
     }
 }
