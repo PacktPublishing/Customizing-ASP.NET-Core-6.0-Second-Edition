@@ -46,7 +46,7 @@ namespace ModelBinderSample.Controllers
         {
             if (bindingContext == null)
             {
-                throw new ArgumentNullException(nameof(bindingContext));
+                return;
             }
 
             var modelName = bindingContext.ModelName;
