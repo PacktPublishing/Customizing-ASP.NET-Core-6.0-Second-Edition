@@ -1,2 +1,2 @@
-# Customizing-ASP.NET-Core-6
-Customizing ASP.NET Core 6, published by Packt
+# Customizing-ASP.NET-Core-6.0
+Customizing ASP.NET Core 6.0, published by Packt
