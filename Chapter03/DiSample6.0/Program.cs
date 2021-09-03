@@ -1,34 +1,36 @@
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
 
-namespace DiSample
+using DiSample;
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseAutofacServiceProviderFactory();
+
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+builder.Services.AddTransient<IService, MyService>();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .UseAutofacServiceProviderFactory()
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
-
-    public static class IHostBuilderExtension
-    {
-        public static IHostBuilder UseAutofacServiceProviderFactory(
-            this IHostBuilder hostbuilder)
-        {
-            hostbuilder.UseServiceProviderFactory<ContainerBuilder>(
-                new AutofacServiceProviderFactory());
-            return hostbuilder;
-        }
-    }
+    app.UseDeveloperExceptionPage();
 }
+else
+{
+    app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.Run();
