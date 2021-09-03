@@ -7,18 +7,15 @@ using Microsoft.AspNetCore.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Host.ConfigureWebHostDefaults(webBuilder =>
+builder.WebHost.UseKestrel((host, options) =>
 {
-    webBuilder.UseKestrel((host, options) =>
-    {
-        var filename = host.Configuration.GetValue("AppSettings:certfilename", "");
-        var password = host.Configuration.GetValue("AppSettings:certpassword", "");
+    var filename = host.Configuration.GetValue("AppSettings:certfilename", "");
+    var password = host.Configuration.GetValue("AppSettings:certpassword", "");
 
-        options.Listen(IPAddress.Loopback, 5000);
-        options.Listen(IPAddress.Loopback, 5001, listenOptions =>
-        {
-            listenOptions.UseHttps(filename, password);
-        });
+    options.Listen(IPAddress.Loopback, 5000);
+    options.Listen(IPAddress.Loopback, 5001, listenOptions =>
+    {
+        listenOptions.UseHttps(filename, password);
     });
 });
 
