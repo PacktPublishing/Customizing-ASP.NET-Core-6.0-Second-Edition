@@ -2,28 +2,22 @@ using ConfigureSample;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.ConfigureAppConfiguration((builderContext, config) =>
-{
-    var env = builderContext.HostingEnvironment;
+builder.Configuration.SetBasePath(env.ContentRootPath);
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+builder.Configuration.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
 
-    config.SetBasePath(env.ContentRootPath);
-    config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-    config.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+builder.Configuration.AddIniFile("appsettings.ini", optional: false, reloadOnChange: true);
+builder.Configuration.AddJsonFile($"appsettings.{env.EnvironmentName}.ini", optional: true, reloadOnChange: true);
 
-    config.AddIniFile("appsettings.ini", optional: false, reloadOnChange: true);
-    config.AddJsonFile($"appsettings.{env.EnvironmentName}.ini", optional: true, reloadOnChange: true);
+// add new configuration source
+// builder.Configuration.Add(new MyCustomConfigurationSource
+// {
+//     SourceConfig = //configure whatever source 
+//     Optional = false,
+//     ReloadOnChange = true
+// });
 
-
-    // // add new configuration source
-    // config.Add(new MyCustomConfigurationSource
-    // {
-    //     SourceConfig = //configure whatever source 
-    //     Optional = false,
-    //     ReloadOnChange = true
-    // });
-
-    config.AddEnvironmentVariables();
-});
+builder.Configuration.AddEnvironmentVariables();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
