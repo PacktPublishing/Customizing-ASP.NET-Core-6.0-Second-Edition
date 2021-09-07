@@ -2,6 +2,7 @@ using ConfigureSample;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var env = builder.Environment;
 builder.Configuration.SetBasePath(env.ContentRootPath);
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 builder.Configuration.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
