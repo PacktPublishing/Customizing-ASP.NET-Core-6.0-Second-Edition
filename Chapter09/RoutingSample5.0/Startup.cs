@@ -82,7 +82,7 @@ namespace RoutingSample
                     .Build())
                     .WithDisplayName("My custom health checks");
 
-                //endpoints.MapHealthChecks("/healthz"); 
+                //endpoints.MapMyHealthChecks("/healthz"); 
 
                 endpoints.MapControllerRoute(
                     name: "default",
