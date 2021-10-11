@@ -14,5 +14,4 @@ public class PersonsController : ControllerBase
         var persons = A.ListOf<Person>(25);
         return persons;
     }
-
 }

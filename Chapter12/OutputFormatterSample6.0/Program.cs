@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.OpenApi.Models;
+using OutputFormatterSample;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,11 @@ builder.Services.AddControllers()
         options.RespectBrowserAcceptHeader = true; // false by default
         options.OutputFormatters.Add(new XmlSerializerOutputFormatter());
 
+        // register the VcardOutputFormatter
+        options.OutputFormatters.Add(new VcardOutputFormatter());
+
+        // register the CsvOutputFormatter
+        options.OutputFormatters.Add(new CsvOutputFormatter());
 
     });
 

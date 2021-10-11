@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using OutputFormatterSample.Model;
 
 namespace OutputFormatterSample.Controllers;
 

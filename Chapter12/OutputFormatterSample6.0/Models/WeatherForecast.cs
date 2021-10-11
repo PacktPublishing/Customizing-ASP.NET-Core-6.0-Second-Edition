@@ -1,4 +1,4 @@
-namespace OutputFormatterSample;
+namespace OutputFormatterSample.Model;
 
 public class WeatherForecast
 {
