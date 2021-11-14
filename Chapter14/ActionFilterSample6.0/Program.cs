@@ -3,6 +3,7 @@ using ActionFilterSample;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSingleton<LoggingActionFilter>();
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(options =>
     {
