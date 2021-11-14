@@ -28,7 +28,7 @@ namespace TagHelperSample.Controllers
 
             var persons = _service.AllPersons();
 
-            return View(new AboutViewModel
+            return View(new IndexViewModel
             {
                 Persons = persons
             });
@@ -46,7 +46,7 @@ namespace TagHelperSample.Controllers
         }
     }
 
-    public class AboutViewModel
+    public class IndexViewModel
     {
         public IEnumerable<Person> Persons { get; set; }
     }
