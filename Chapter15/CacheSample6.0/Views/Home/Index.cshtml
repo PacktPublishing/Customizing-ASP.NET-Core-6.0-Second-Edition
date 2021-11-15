@@ -1,0 +1,15 @@
+﻿@using System
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<cache enabled="true"> @* expires-after="00:15:00" expires-on="2022-01-01 00:00:00" expires-sliding="true"> *@
+<div>
+    <p>The current time is: @DateTime.Now.ToLongTimeString()</p>
+</div>
+</cache>
