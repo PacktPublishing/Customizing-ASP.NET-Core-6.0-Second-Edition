@@ -1,4 +1,5 @@
 ﻿@using System
+@model IndexViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -8,8 +9,20 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
-<cache enabled="true"> @* expires-after="00:15:00" expires-on="2022-01-01 00:00:00" expires-sliding="true"> *@
+<div>
+    <p>The current time is: @DateTime.Now.ToLongTimeString()</p>
+</div>
+
+<cache expires-sliding="@TimeSpan.FromSeconds(7)">
 <div>
     <p>The current time is: @DateTime.Now.ToLongTimeString()</p>
 </div>
 </cache>
+@* 
+<div>
+    <p>@Model.Message1</p>
+</div>
+
+<div>
+    <p>@Model.Message2</p>
+</div> *@

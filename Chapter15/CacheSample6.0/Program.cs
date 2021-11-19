@@ -1,18 +1,30 @@
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
-
-
-builder.Services.AddMemoryCache(options => {
+builder.Services.AddControllersWithViews(options =>
+{
+    options.CacheProfiles.TryAdd("Duration30",
+        new CacheProfile
+        {
+            Duration = 30, 
+            VaryByHeader = "User-Agent", 
+            Location = ResponseCacheLocation.Client
+        });
+    options.CacheProfiles.TryAdd("Duration60",
+        new CacheProfile
+        {
+            Duration = 60, 
+            VaryByHeader = "User-Agent", 
+            Location = ResponseCacheLocation.Client
+        });
 });
-// builder.Services.AddDistributedMemoryCache(Options=> {
-// });
-builder.Services.AddResponseCaching(options => {
 
-});
+// builder.Services.AddMemoryCache();
+// builder.Services.AddResponseCaching();
 
 var app = builder.Build();
 
@@ -26,15 +38,17 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+const string cacheMaxAge = "86400";
 app.UseStaticFiles(new StaticFileOptions()
 {
-    OnPrepareResponse = x =>
+    OnPrepareResponse = ctx =>
     {
-        x.Context.Response.Headers.TryAdd("Cache-Control", "no-cache");
+        ctx.Context.Response.Headers.TryAdd(
+            "Cache-Control", $"public, max-age={cacheMaxAge}");
     }
 });
 
-app.UseResponseCaching();
+//app.UseResponseCaching();
 
 app.UseRouting();
 
