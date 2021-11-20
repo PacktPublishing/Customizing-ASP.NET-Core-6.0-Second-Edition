@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ConfigureSample.Models;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 
 namespace ConfigureSample.Controllers;
 

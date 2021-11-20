@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="genfu" Version="1.6.0" />
+  </ItemGroup>
+
 </Project>

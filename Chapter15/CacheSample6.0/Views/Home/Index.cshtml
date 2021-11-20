@@ -14,15 +14,26 @@
 </div>
 
 <cache expires-sliding="@TimeSpan.FromSeconds(7)">
-<div>
-    <p>The current time is: @DateTime.Now.ToLongTimeString()</p>
-</div>
+    <div>
+        <p>The current time is: @DateTime.Now.ToLongTimeString()</p>
+    </div>
 </cache>
-@* 
-<div>
-    <p>@Model.Message1</p>
-</div>
 
-<div>
-    <p>@Model.Message2</p>
-</div> *@
+<div class="row">
+    <div class="col-md-6">
+        <ul>
+            @foreach (var person in Model.Persons)
+            {
+                <li>[@person.Id] @person.Firstname @person.Lastname</li>
+            }
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <ul>
+            @foreach (var data in Model.Data)
+            {
+                <li>[@data.Key] @data.Value</li>
+            }
+        </ul>
+    </div>
+</div>

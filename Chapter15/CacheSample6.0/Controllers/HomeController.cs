@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using CacheSample.Models;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Caching.Distributed;
+using GenFu;
 
 namespace CacheSample.Controllers;
 
@@ -11,34 +12,53 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly IMemoryCache _cache;
 
-    public HomeController(ILogger<HomeController> logger, IMemoryCache cache, IDistributedCache distcache)
+    public HomeController(
+        ILogger<HomeController> logger,
+        IMemoryCache cache
+        )
     {
         _logger = logger;
         _cache = cache;
     }
 
+    private IEnumerable<Person> LoadDataFromExternalSource()
+    {
+        return A.ListOf<Person>(10);
+    }
+
+    private IDictionary<int, string> LoadSuperComplexCalculatedData()
+    {
+        return Enumerable.Range(0, 10)
+            .ToDictionary(x => x, x => $"Item{Random.Shared.Next()}");
+    }
+
     //[ResponseCache(CacheProfileName = "Duration30")]
     public IActionResult Index()
     {
-        if (!_cache.TryGetValue<string>("IndexKey1", out var message1))
+        if (!_cache.TryGetValue<IEnumerable<Person>>(
+            "ExternalSource", out var externalPersons))
         {
-            message1 = $"The current time is: {DateTime.Now.ToLongTimeString()}";
-            _cache.Set("IndexKey1", message1, new MemoryCacheEntryOptions
-            {
-                SlidingExpiration = TimeSpan.FromSeconds(6)
-            });
+            externalPersons = LoadDataFromExternalSource();
+            _cache.Set(
+                "ExternalSource",
+                externalPersons,
+                new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpiration = DateTime.Now.AddSeconds(30)
+                });
         }
 
-        var message2 = _cache.GetOrCreate("Index", entry =>
+        var calculatedValues = _cache.GetOrCreate(
+            "ComplexCalculate", entry =>
         {
-            entry.SlidingExpiration = TimeSpan.FromSeconds(5);
-            return $"The current time is: {DateTime.Now.ToLongTimeString()}";
+            entry.AbsoluteExpiration = DateTime.Now.AddSeconds(30);
+            return LoadSuperComplexCalculatedData();
         });
 
         return View(new IndexViewModel
         {
-            Message1 = message1,
-            Message2 = message2
+            Persons = externalPersons,
+            Data = calculatedValues
         });
     }
 

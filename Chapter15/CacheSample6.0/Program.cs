@@ -23,8 +23,8 @@ builder.Services.AddControllersWithViews(options =>
         });
 });
 
-// builder.Services.AddMemoryCache();
-// builder.Services.AddResponseCaching();
+builder.Services.AddMemoryCache();
+builder.Services.AddResponseCaching();
 
 var app = builder.Build();
 
@@ -48,7 +48,7 @@ app.UseStaticFiles(new StaticFileOptions()
     }
 });
 
-//app.UseResponseCaching();
+app.UseResponseCaching();
 
 app.UseRouting();
 
