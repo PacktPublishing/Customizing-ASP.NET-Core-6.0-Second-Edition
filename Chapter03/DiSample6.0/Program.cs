@@ -1,4 +1,3 @@
-
 using DiSample;
 
 var builder = WebApplication.CreateBuilder(args);

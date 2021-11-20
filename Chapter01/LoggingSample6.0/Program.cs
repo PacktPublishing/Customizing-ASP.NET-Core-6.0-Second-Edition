@@ -3,25 +3,22 @@ using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.ConfigureLogging((hostingContext, logging) =>
-{
-    
-    // logging.ClearProviders();
-    // logging.SetMinimumLevel(LogLevel.Trace);
 
-    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
-    logging.AddConsole();
-    logging.AddDebug();
+// builder.Logging.ClearProviders();
+// builder.Logging.SetMinimumLevel(LogLevel.Trace);
 
-    // logging.ClearProviders();
-    // var config = new ColoredConsoleLoggerConfiguration
-    // {
-    //     LogLevel = LogLevel.Information,
-    //     Color = ConsoleColor.Red
-    // };
-    // logging.AddProvider(new ColoredConsoleLoggerProvider(config));
-    
-});
+builder.Logging.AddConfiguration(builder.Configuration.GetSection("Logging"));
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+
+builder.Logging.ClearProviders();
+// var config = new ColoredConsoleLoggerConfiguration
+// {
+//     LogLevel = LogLevel.Information,
+//     Color = ConsoleColor.Red
+// };
+// builder.Logging.AddProvider(new ColoredConsoleLoggerProvider(config));
+
 builder.WebHost.UseNLog();
 
 // Add services to the container.

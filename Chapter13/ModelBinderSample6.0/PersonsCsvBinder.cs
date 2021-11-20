@@ -38,6 +38,7 @@ public class PersonsCsvBinder : IModelBinder
         {
             return;
         }
+        
         var stringReader = new StringReader(value);
         var reader = new CsvReader(stringReader, CultureInfo.InvariantCulture);
         var asyncModel = reader.GetRecordsAsync<Person>();

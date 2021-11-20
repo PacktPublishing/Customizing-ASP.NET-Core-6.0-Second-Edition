@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Concurrent;
-using Microsoft.Extensions.Logging;
-using NLog.Web;
 
 namespace LoggingSample;
 
