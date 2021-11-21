@@ -11,7 +11,7 @@ builder.Logging.AddConfiguration(builder.Configuration.GetSection("Logging"));
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
 
-builder.Logging.ClearProviders();
+//builder.Logging.ClearProviders();
 // var config = new ColoredConsoleLoggerConfiguration
 // {
 //     LogLevel = LogLevel.Information,
