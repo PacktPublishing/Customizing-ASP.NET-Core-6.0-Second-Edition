@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AuthSample.Data;
 
-public class WebAppUser : IdentityUser
+public class ApplicationUser : IdentityUser
 {
     [PersonalData]
     public string? Name { get; set; }

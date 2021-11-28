@@ -1,20 +1,38 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using AuthSample.Data;
+using IdentityManagementSample.Data;
+using System.Security.Claims;
+using IdentityManager2.AspNetIdentity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using IdentityManager2.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionString));
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.AddAuthentication();
+    //.AddCookie("cookie");
+
+builder.Services.AddIdentityManager(options =>
+{
+    // options.SecurityConfiguration = new SecurityConfiguration
+    // {
+    //     HostAuthenticationType = "cookie",
+    //     AdminRoleName = "Admin"
+    // };
+}).AddIdentityMangerService<AspNetCoreIdentityManagerService<ApplicationUser, string, IdentityRole, string>>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
- 
+
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Password settings.
@@ -68,6 +86,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseIdentityManager();
 
 app.MapControllerRoute(
     name: "default",
