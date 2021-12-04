@@ -18,17 +18,8 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.S
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-builder.Services.AddAuthentication();
-    //.AddCookie("cookie");
-
-builder.Services.AddIdentityManager(options =>
-{
-    // options.SecurityConfiguration = new SecurityConfiguration
-    // {
-    //     HostAuthenticationType = "cookie",
-    //     AdminRoleName = "Admin"
-    // };
-}).AddIdentityMangerService<AspNetCoreIdentityManagerService<ApplicationUser, string, IdentityRole, string>>();
+builder.Services.AddIdentityManager()
+    .AddIdentityMangerService<AspNetCoreIdentityManagerService<ApplicationUser, string, IdentityRole, string>>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

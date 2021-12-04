@@ -74,7 +74,9 @@ public class ColoredConsoleLogger : ILogger
             {
                 var color = Console.ForegroundColor;
                 Console.ForegroundColor = _config.Color;
-                Console.WriteLine($"{logLevel} - {eventId.Id} - {_name} - {formatter(state, exception)}");
+                Console.Write($"{logLevel} - ");
+                Console.Write($"{eventId.Id} - {_name} - ");
+                Console.Write($"{formatter(state, exception)}\n");
                 Console.ForegroundColor = color;
             }
         }
