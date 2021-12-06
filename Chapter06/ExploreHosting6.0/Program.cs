@@ -1,7 +1,10 @@
 using System.Net;
+using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 
+/*
+// kestrel options, remove for IIS usage
 builder.WebHost.UseKestrel((host, options) =>
 {
     var filename = host.Configuration.GetValue(
@@ -16,13 +19,27 @@ builder.WebHost.UseKestrel((host, options) =>
             listenOptions.UseHttps(filename, password);
         });
 });
+*/
+
+/*
+// => needed for Nginx or Apache Hosting
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.KnownProxies.Add(
+        IPAddress.Parse("10.0.0.100"));
+});
+*/
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+/*
+// => needed for Nginx or Apache Hosting
+app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
-    app.UseDeveloperExceptionPage();
-}
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor 
+        | ForwardedHeaders.XForwardedProto
+});
+*/
 
 app.MapGet("/", () => "Hello World!");
 
