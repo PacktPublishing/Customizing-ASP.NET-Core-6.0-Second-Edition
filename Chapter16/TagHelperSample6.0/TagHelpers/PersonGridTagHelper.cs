@@ -1,6 +1,5 @@
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using TagHelperSample.Services;
+using TagHelperSample.Models;
 
 namespace TagHelperSample.TagHelpers;
 

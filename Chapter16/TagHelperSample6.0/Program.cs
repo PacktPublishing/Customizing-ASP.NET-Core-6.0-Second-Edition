@@ -1,7 +1,10 @@
+using TagHelperSample.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddTransient<IService, PersonService>();
 
 var app = builder.Build();
 

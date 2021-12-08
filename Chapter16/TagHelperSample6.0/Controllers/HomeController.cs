@@ -9,11 +9,9 @@ public class HomeController : Controller
 {
     private readonly IService _service;
 
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger, IService service)
+    public HomeController(
+        IService service)
     {
-        _logger = logger;
         _service = service;
     }
 
@@ -22,7 +20,6 @@ public class HomeController : Controller
         ViewData["Message"] = "Your application description page.";
 
         var persons = _service.AllPersons();
-
         return View(new IndexViewModel
         {
             Persons = persons
