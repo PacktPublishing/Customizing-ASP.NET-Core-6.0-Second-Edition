@@ -1,10 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using IdentityManagementSample.Data;
-using System.Security.Claims;
 using IdentityManager2.AspNetIdentity;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
-using IdentityManager2.Configuration;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
