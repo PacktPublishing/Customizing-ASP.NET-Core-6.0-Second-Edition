@@ -1,35 +1,35 @@
-namespace HostedServiceSample
+namespace HostedServiceSample;
+
+public class SampleHostedService : IHostedService
 {
-    public class SampleHostedService : IHostedService
+    private readonly ILogger<SampleHostedService> logger;
+    public SampleHostedService(ILogger<SampleHostedService> logger)
     {
-        private readonly ILogger<SampleHostedService> logger;
-        public SampleHostedService(ILogger<SampleHostedService> logger)
-        {
-            this.logger = logger;
-        }
+        this.logger = logger;
+    }
 
-        public Task StartAsync(CancellationToken cancellationToken)
-        {
-            logger.LogInformation("Hosted service starting");
+    public Task StartAsync(CancellationToken cancellationToken)
+    {
+        logger.LogInformation("Hosted service starting");
 
-            return Task.Factory.StartNew(async () =>
+        return Task.Factory.StartNew(async () =>
+        {
+            while (!cancellationToken.IsCancellationRequested)
             {
-                while (!cancellationToken.IsCancellationRequested)
+                logger.LogInformation("Hosted service executing - {0}", DateTime.Now);
+                try
                 {
-                    logger.LogInformation("Hosted service executing - {0}", DateTime.Now);
-                    try
-                    {
-                        await Task.Delay(TimeSpan.FromSeconds(2), cancellationToken);
-                    }
-                    catch (OperationCanceledException) { }
+                    await Task.Delay(TimeSpan.FromSeconds(2), cancellationToken);
                 }
-            }, cancellationToken);
-        }
+                catch (OperationCanceledException) { }
+            }
+        }, cancellationToken);
+    }
 
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            logger.LogInformation("Hosted service stopping");
-            return Task.CompletedTask;
-        }
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        logger.LogInformation("Hosted service stopping");
+        return Task.CompletedTask;
     }
 }
+
