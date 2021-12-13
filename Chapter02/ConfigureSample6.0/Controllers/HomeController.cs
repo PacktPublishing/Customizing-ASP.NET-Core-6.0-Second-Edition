@@ -8,14 +8,11 @@ namespace ConfigureSample.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
     private readonly AppSettings _options;
 
     public HomeController(
-        ILogger<HomeController> logger, 
         IOptions<AppSettings> options)
     {
-        _logger = logger;
         _options = options.Value;
     }
 
