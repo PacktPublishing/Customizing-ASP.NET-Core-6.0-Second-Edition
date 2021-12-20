@@ -53,7 +53,7 @@ With the following software and hardware list you can run all code files present
 | -------- | ------------------------------------| -----------------------------------|
 | 1-16        | .NET 5.0                   | Windows, Mac OS X, and Linux (Any) |
 | 1-16        | Visual Studio code           | Windows, Mac OS X, and Linux (Any) |
-| 6       |	Nginx or Apache webserver            | Windows, Mac OS X, and Linux (Any) |
+| 6       |	Nginx or Apache webserver            |  Linux  |
 
 
 
