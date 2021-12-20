@@ -27,9 +27,18 @@ All of the code is organized into folders. For example, Chapter02.
 
 The code will look like the following:
 ```
-if (test expression)
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
 {
-  Statement upon condition is true
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
 }
 ```
 
@@ -42,10 +51,10 @@ With the following software and hardware list you can run all code files present
 
 | Chapter  | Software required                   | OS required                        |
 | -------- | ------------------------------------| -----------------------------------|
-| 1        | .NET 5.0                   | Windows, Mac OS X, and Linux (Any) |
-| 2        | Visual Studio code           | Windows, Mac OS X, and Linux (Any) |
-| 3        |	Nginx or Apache webserver            | Windows, Mac OS X, and Linux (Any) |
-| 4        | Rstudio Desktop 0.99.903            | Windows, Mac OS X, and Linux (Any) |
+| 1-16        | .NET 5.0                   | Windows, Mac OS X, and Linux (Any) |
+| 1-16        | Visual Studio code           | Windows, Mac OS X, and Linux (Any) |
+| 6       |	Nginx or Apache webserver            | Windows, Mac OS X, and Linux (Any) |
+
 
 
 We also provide a PDF file that has color images of the screenshots/diagrams used in this book. [Click here to download it](Graphics Bundle Link).
