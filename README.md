@@ -1,3 +1,7 @@
+## [Get this title for $10 on Packt's Spring Sale](https://www.packt.com/B17996?utm_source=github&utm_medium=packt-github-repo&utm_campaign=spring_10_dollar_2022)
+-----
+For a limited period, all eBooks and Videos are only $10. All the practical content you need \- by developers, for developers
+
 # Customizing ASP.NET Core 6.0 - Second Edition
 
 <a href="https://www.packtpub.com/product/customizing-asp-net-core-6-0-second-edition/9781803233604"><img src="https://static.packt-cdn.com/products/9781803233604/cover/smaller" alt="Customizing ASP.NET Core 6.0" height="256px" align="right"></a>
