@@ -75,3 +75,7 @@ He works as a developer, consultant, and trainer for the digital agency YOO Inc.
 * [Customizing ASP.NET Core 5.0](https://www.packtpub.com/product/customizing-asp-net-core-5-0/9781801077866)
 
 
+### Download a free PDF
+
+ <i>If you have already purchased a print or Kindle version of this book, you can get a DRM-free PDF version at no cost.<br>Simply click on the link to claim your free PDF.</i>
+<p align="center"> <a href="https://packt.link/free-ebook/9781803233604">https://packt.link/free-ebook/9781803233604 </a> </p>
